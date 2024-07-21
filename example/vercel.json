@@ -6,7 +6,7 @@
   "builds": [
     {
       "src": "index.cjs",
-      "use": "@vercel/node"
+      "use": "@vercel/node@3.2.2"
     }
   ],
   "rewrites": [
