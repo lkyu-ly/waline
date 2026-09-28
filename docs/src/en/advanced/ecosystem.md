@@ -33,6 +33,14 @@ Waline is a classic Client/Server architecture, which provides a relatively comp
 
   By [@BeiyanYunyi](https://github.com/BeiyanYunyi), build with Solid.js. For usage, see its README and [website](https://BeiyanYunyi.github.io/sodesu/)。
 
+## Rusty
+
+[waline-mini](https://github.com/JQiue/waline-mini) is a server-side implementation in Rust, highly suitable for running in resource-constrained server environments.
+
+## Cloudflare Workers
+
+[Waline_On_Worker](https://github.com/wuyilingwei/Waline_On_Worker) is a server-side implementation based on Workers by the community, making up for the shortcoming that Waline cannot run on Cloudflare Workers.
+
 ## Plugins
 
 ### Hexo

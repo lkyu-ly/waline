@@ -16,7 +16,7 @@ export interface WalineUserListOptions {
   /**
    * 获取用户列表的数量
    *
-   * fetch number of user list
+   * Fetch number of user list
    */
   count: number;
 
@@ -42,7 +42,6 @@ export interface WalineUserListOptions {
    * @see [自定义语言](https://waline.js.org/client/i18n.html)
    *
    * Custom display language in waline
-   *
    * @see [I18n](https://waline.js.org/en/client/i18n.html)
    */
   locale?: WalineLocale;
@@ -50,9 +49,11 @@ export interface WalineUserListOptions {
   /**
    * 列表模式还是头像墙模式
    *
-   * list mode or avatar wall mode
+   * List mode or avatar wall mode
+   *
+   * @default 'list'
    */
-  mode: 'list' | 'wall';
+  mode?: 'list' | 'wall';
 }
 
 export interface WalineUserListResult {
@@ -88,22 +89,25 @@ export const UserList = ({
     lang,
     signal: controller.signal,
   }).then((users) => {
-    if (!root || !users.length)
+    if (!root || users.length === 0) {
       return {
         users,
-        destroy: (): void => controller.abort(),
+        destroy: (): void => {
+          controller.abort();
+        },
       };
+    }
 
-    locale = {
+    const localeData = {
       ...getLocale(lang),
       ...(typeof locale === 'object' ? locale : {}),
-    } as WalineLocale;
+    };
 
     root.innerHTML = `<ul class="wl-user-${mode}">${users
       .map((user, index) =>
         [
           `<li class="wl-user-item" aria-label="${user.nick}">`,
-          user.link && `<a href="${user.link}" target="_blank">`,
+          user.link ? `<a href="${user.link}" target="_blank">` : '',
           '<div class="wl-user-avatar">',
           `<img src="${user.avatar}" alt="${user.nick}">`,
           `<span class="wl-user-badge">${index + 1}</span>`,
@@ -111,18 +115,19 @@ export const UserList = ({
           '<div class="wl-user-meta">',
           '<div class="wl-user-name">',
           user.nick,
-          user.level &&
-            `<span class="wl-badge">${
-              locale ? locale[`level${user.level}`] : `Level ${user.level}`
-            }</span>`,
-          user.label && `<span class="wl-badge">${user.label}</span>`,
+          typeof user.level === 'number'
+            ? `<span class="wl-badge">${
+                localeData[`level${user.level}`] ?? `Level ${user.level}`
+              }</span>`
+            : '',
+          user.label ? `<span class="wl-badge">${user.label}</span>` : '',
           '</div>',
-          user.link && user.link,
+          user.link,
           '</div>',
-          user.link && '</a>',
+          user.link ? '</a>' : '',
           '</li>',
         ]
-          .filter((v) => v)
+          .filter(Boolean)
           .join(''),
       )
       .join('')}</ul>`;

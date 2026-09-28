@@ -1,8 +1,4 @@
-import type {
-  WalineComment,
-  WalineCommentData,
-  WalineRootComment,
-} from './typings.js';
+import type { WalineComment, WalineCommentData, WalineRootComment } from './typings.js';
 import type { BaseAPIOptions, ErrorStatusResponse } from './utils.js';
 import { JSON_HEADERS, errorCheck, getFetchPrefix } from './utils.js';
 
@@ -107,12 +103,7 @@ export const getComment = ({
     )}&pageSize=${pageSize}&page=${page}&lang=${lang}&sortBy=${sortBy}`,
     { signal, headers },
   )
-    .then(
-      (resp) =>
-        resp.json() as Promise<
-          { data: GetCommentResponse } & ErrorStatusResponse
-        >,
-    )
+    .then((resp) => resp.json() as Promise<{ data: GetCommentResponse } & ErrorStatusResponse>)
     .then((data) => errorCheck(data, 'Get comment data').data);
 };
 
@@ -148,7 +139,6 @@ export const addComment = ({
   comment,
 }: AddCommentOptions): Promise<AddCommentResponse> => {
   const headers: Record<string, string> = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     'Content-Type': 'application/json',
   };
 
@@ -174,7 +164,7 @@ export interface DeleteCommentOptions extends BaseAPIOptions {
    *
    * 待删除的评论对象 ID
    */
-  objectId: string | number;
+  objectId: number;
 }
 
 export interface DeleteCommentResponse extends ErrorStatusResponse {
@@ -216,7 +206,7 @@ interface UpdateWalineCommentData extends Partial<WalineCommentData> {
    *
    * Comment sticky status
    *
-   * @description 0 means not sticky and 1 means sticky
+   * 0 means not sticky and 1 means sticky
    */
   sticky?: 0 | 1;
 }
@@ -233,7 +223,7 @@ export interface UpdateCommentOptions extends BaseAPIOptions {
    *
    * Comment ID
    */
-  objectId: number | string;
+  objectId: number;
 
   /**
    * 评论数据

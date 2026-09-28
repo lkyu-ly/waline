@@ -98,7 +98,6 @@ order: 2
 
 - 无序列表项
 - 无序列表项
-
   - 列表中的列表项
     - 更多的列表项
     - 更多的列表项
@@ -114,7 +113,6 @@ order: 2
 ```md
 - 无序列表项
 - 无序列表项
-
   - 列表中的列表项
     - 更多的列表项
     - 更多的列表项
@@ -234,6 +232,8 @@ console.log(foo(5));
 
 ::: details 例子
 
+<!-- prettier-ignore-start -->
+
 - 19^th^
 - H~2~O
 
@@ -241,6 +241,8 @@ console.log(foo(5));
 - 19^th^
 - H~2~O
 ```
+
+<!-- prettier-ignore-end -->
 
 :::
 

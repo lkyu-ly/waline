@@ -125,7 +125,7 @@ The text may not be well understood. Let's take a look at the query examples use
    // SELECT * FROM Comment WHERE url = '/' AND ( user_id = 0 OR status NOT IN ('waiting', 'spam'));
    ```
 
-If you are more familiar with TypeScript, there are type definitions for conditional queries [here](https://github.com/walinejs/dittorm/blob/master/src/types/where.ts).
+If you are more familiar with TypeScript, [type definitions for conditional queries is here](https://github.com/walinejs/dittorm/blob/master/src/types/where.ts).
 
 ## Implement query
 
@@ -157,7 +157,6 @@ Based on the above logic, in addition to implementing the storage service of pro
 const path = require('path');
 
 const { parseString, writeToString } = require('fast-csv');
-const fetch = require('node-fetch');
 
 const Base = require('./base');
 
@@ -209,8 +208,7 @@ class Github {
   // content api can only get file < 1MB
   async get(filename) {
     const resp = await fetch(
-      'https://api.github.com/repos/' +
-        path.join(this.repo, 'contents', filename),
+      'https://api.github.com/repos/' + path.join(this.repo, 'contents', filename),
       {
         headers: {
           accept: 'application/vnd.github.v3+json',
@@ -239,9 +237,7 @@ class Github {
   // blob api can get file larger than 1MB
   async getLargeFile(filename) {
     const { tree } = await fetch(
-      'https://api.github.com/repos/' +
-        path.join(this.repo, 'git/trees/HEAD') +
-        '?recursive=1',
+      'https://api.github.com/repos/' + path.join(this.repo, 'git/trees/HEAD') + '?recursive=1',
       {
         headers: {
           accept: 'application/vnd.github.v3+json',
@@ -270,23 +266,19 @@ class Github {
   }
 
   async set(filename, content, { sha }) {
-    return fetch(
-      'https://api.github.com/repos/' +
-        path.join(this.repo, 'contents', filename),
-      {
-        method: 'PUT',
-        headers: {
-          accept: 'application/vnd.github.v3+json',
-          authorization: 'token ' + this.token,
-          'user-agent': 'Waline',
-        },
-        body: JSON.stringify({
-          sha,
-          message: 'feat(waline): update comment data',
-          content: Buffer.from(content, 'utf-8').toString('base64'),
-        }),
+    return fetch('https://api.github.com/repos/' + path.join(this.repo, 'contents', filename), {
+      method: 'PUT',
+      headers: {
+        accept: 'application/vnd.github.v3+json',
+        authorization: 'token ' + this.token,
+        'user-agent': 'Waline',
       },
-    );
+      body: JSON.stringify({
+        sha,
+        message: 'feat(waline): update comment data',
+        content: Buffer.from(content, 'utf-8').toString('base64'),
+      }),
+    });
   }
 }
 
@@ -422,9 +414,7 @@ module.exports = class extends Base {
 
     const logicFn = logicMap[where._complex._logic];
 
-    return data.filter((item) =>
-      logicFn.call(filters, (filter) => filter.every((fn) => fn(item))),
-    );
+    return data.filter((item) => logicFn.call(filters, (filter) => filter.every((fn) => fn(item))));
   }
 
   async select(where, { desc, limit, offset, field } = {}) {

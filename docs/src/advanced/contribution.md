@@ -25,19 +25,19 @@ order: -1
    请使用 pnpm 安装依赖:
 
    ```bash
-   npm i -g pnpm@latest
+   corepack enable
    ```
 
    :::
 
    ```bash
    cd waline
-   pnpm i
+   pnpm ci
    ```
 
 ## 开发
 
-- 使用 `pnpm client:dev` 启动 `@waline/client` 本地开发
+- 使用 `pnpm run client:dev` 启动 `@waline/client` 本地开发
 
   ::: tip
 
@@ -45,12 +45,12 @@ order: -1
 
   :::
 
-- 使用 `pnpm server:dev` 启动 `@waline/server` 本地开发
+- 使用 `pnpm run server:dev` 启动 `@waline/server` 本地开发
 
   ::: tip
 
-  为了使 `@waline/server` 能在本地正常运行，你需要配置必要的本地环境变量至 `example/.env`。
+  为了使 `@waline/server` 能在本地正常运行，你需要配置必要的本地环境变量至 `.env`。
 
-  在 `example/.env.example` 我们准备了示例供你参考
+  在 `.env.example` 我们准备了示例供你参考
 
   :::

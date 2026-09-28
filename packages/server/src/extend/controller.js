@@ -20,7 +20,7 @@ module.exports = {
     return this[this.ctx.state.deprecated ? 'json' : 'success'](...args);
   },
   locale(message, variables) {
-    const { userLang } = this.get();
+    const { lang: userLang } = this.get();
     const lang = (userLang || defaultLang).toLowerCase();
 
     const customLocales = this.config('locales');
@@ -38,10 +38,10 @@ module.exports = {
     return nunjucks.renderString(message, variables);
   },
   getModel(modelName) {
-    const { storage, model } = this.config();
+    const { storage, customModel } = this.config();
 
-    if (typeof model === 'function') {
-      const modelInstance = model(modelName, this);
+    if (typeof customModel === 'function') {
+      const modelInstance = customModel(modelName, this);
 
       if (modelInstance) {
         return modelInstance;

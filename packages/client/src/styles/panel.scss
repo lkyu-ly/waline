@@ -157,6 +157,7 @@
 
   resize: vertical;
 
+  box-sizing: border-box;
   width: calc(100% - 1em);
   min-height: 8.75em;
   margin: 0.75em 0.5em;
@@ -194,7 +195,7 @@
   .wl-content {
     min-height: 1.25em;
     padding: 0.25em;
-    word-break: break-word;
+    overflow-wrap: break-word;
     hyphens: auto;
 
     > *:first-child {

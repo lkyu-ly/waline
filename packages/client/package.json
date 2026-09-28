@@ -1,23 +1,26 @@
 {
   "name": "@waline/client",
-  "version": "3.3.0",
+  "version": "3.16.0",
   "description": "client for waline comment system",
   "keywords": [
-    "valine",
-    "waline",
+    "blog",
     "comment",
-    "blog"
+    "valine",
+    "waline"
   ],
-  "repository": {
-    "url": "https://github.com/walinejs/waline",
-    "directory": "packages/client"
-  },
   "license": "MIT",
   "author": {
     "name": "Mr.Hope",
     "email": "mister-hope@outlook.com",
     "url": "https://mister-hope.com"
   },
+  "repository": {
+    "url": "git+https://github.com/walinejs/waline.git",
+    "directory": "packages/client"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -49,22 +52,34 @@
     "./waline-meta.css": "./dist/waline-meta.css",
     "./package.json": "./package.json"
   },
-  "main": "./dist/slim.js",
-  "module": "./dist/slim.js",
-  "browser": "./dist/waline.umd.js",
-  "types": "./dist/slim.d.ts",
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
-    "build": "pnpm rollup && pnpm style",
+    "build": "pnpm run style && tsdown",
     "clean": "rimraf ./dist",
     "dev": "vite",
-    "prepublishOnly": "pnpm clean && pnpm build",
-    "rollup": "rollup -c rollup.config.ts --configPlugin esbuild",
-    "style": "pnpm style:main && pnpm style:meta",
+    "prepublishOnly": "pnpm run clean && pnpm run build",
+    "style": "pnpm run style:main && pnpm run style:meta",
     "style:main": "sass ./src/styles/index.scss ./dist/waline.css --style=compressed",
     "style:meta": "sass ./src/styles/meta.scss ./dist/waline-meta.css --style=compressed"
+  },
+  "dependencies": {
+    "@vueuse/core": "^15.0.0",
+    "@waline/api": "workspace:*",
+    "@webc.site/math": "^0.1.41",
+    "autosize": "^6.0.1",
+    "marked": "^18.0.14",
+    "marked-highlight": "^2.2.4",
+    "recaptcha-v3": "^1.11.3",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@babel/core": "8.0.6",
+    "@babel/preset-env": "8.0.6",
+    "@giphy/js-types": "5.1.0",
+    "@types/autosize": "4.0.3",
+    "@vitejs/plugin-vue": "6.0.9"
   },
   "browserslist": {
     "production": [
@@ -81,28 +96,7 @@
       "last 2 safari version"
     ]
   },
-  "dependencies": {
-    "@vueuse/core": "^10.11.0",
-    "@waline/api": "1.0.0-alpha.8",
-    "autosize": "^6.0.1",
-    "marked": "^13.0.2",
-    "marked-highlight": "^2.1.3",
-    "recaptcha-v3": "^1.10.0",
-    "vue": "^3.4.31"
-  },
-  "devDependencies": {
-    "@babel/core": "7.24.8",
-    "@babel/preset-env": "7.24.8",
-    "@giphy/js-types": "5.1.0",
-    "@types/autosize": "4.0.3",
-    "@vitejs/plugin-vue": "5.0.5",
-    "user-agent-data-types": "0.4.2",
-    "vite": "5.3.3"
-  },
   "engines": {
-    "node": ">=18"
-  },
-  "publishConfig": {
-    "provenance": true
+    "node": ">=22"
   }
 }
